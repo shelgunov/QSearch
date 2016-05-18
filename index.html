@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8" />
+  <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+  <title>Demo:  «QSearch»</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <script type="text/javascript" src="jquery.min.js"></script>
+  <script type="text/javascript" src="qsearch.js"></script>
+  <style>
+  ::-webkit-scrollbar {width: 10px;}
+  ::-webkit-scrollbar-thumb {background: #E8E8E8;}
+  ::-webkit-scrollbar-thumb:hover {background:#979797; border-radius:50px;}
+  ::-webkit-scrollbar-track {background: #E8E8E8;}
+  *, *:before, *:after {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+  html, body {margin: 0; padding: 0; background: #E2E8EB;}
+  .font {font-family: Candara,Calibri,Roboto,Helvetica,Corbel,Arial,sans-serif;}
+  .bar{
+  width: 100%;
+  height: 62px;
+  bottom: 0px;
+  position: fixed;
+  border-top: solid 2px #B6C0C6;
+  background: white;
+  background: -moz-linear-gradient(top, #ffffff 0%, #e9eaeb 100%);
+  background: -webkit-linear-gradient(top, #ffffff 0%,#e9eaeb 100%);
+  background: linear-gradient(to bottom, #ffffff 0%,#e9eaeb 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e9eaeb',GradientType=0 );
+  -webkit-box-shadow: 0px -5px 5px 0px rgba(140,140,140,0.1);
+  -moz-box-shadow: 0px -5px 5px 0px rgba(140,140,140,0.1);
+  box-shadow: 0px -5px 5px 0px rgba(140,140,140,0.1);
+  }
+  .bar h1, .bar a{
+  height: 24px;
+  margin: 19px 0 0 30px;
+  padding: 0px;
+  font-size: 19px;
+  font-weight: Normal;
+  line-height: 21px;
+  color: #424242;
+  float: left;
+  }
+  .bar a{
+  background: url('data:image/png;base64,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') right no-repeat;
+  margin: 17px 30px 0 0;
+  padding: 2px 40px 0 0;
+  text-decoration: none;
+  float: right;
+  }
+  .bar a:hover {
+  text-decoration:underline;
+  }
+  .qbox{
+  width: 700px;
+  margin: 5% auto;
+  }
+  .qsearch{
+  width: 700px;
+  height: 54px;
+  background: #4D606B url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAPYQAAD2EBqD+naQAAABZ0RVh0Q3JlYXRpb24gVGltZQAwMy8yMy8xNrc4lQcAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAACn0lEQVQ4jZXVS4gdRRTG8V9f7zgZIRG0pEKgfCDoRkEiLjMEQXBhoiIKuog4uAhmoQFBBB8oMT4gEd2MgkLEx8qNUaOIKG7EQFBw50qYjjKd26CgJmZmMtdFVzttJzNcv9XpU9X/OlR9daoYj8e6KorCwuJoBrPYg53YhlWU+ALv4niKYck6KrrgsqqH2IEncdt6P2GMT/A8fkgxnFsXXFb1JuzDKxjk8b/wJ5bz98XYjJn8fRaP4u0Uw8p54LKqL8oTDuX8Er7HeziaYijz4tfiHtyPGzDM8+fwTophtQ+exTedKl/HU92JXZVVPZ2LeBjTufKdV2694rt2B4qFxdEmfIpbcQ4HUwzPZMB2PKI5yDdTDId6C8xn+BAf4YEUw2l5L2czdIwTmgNRVvXtOIivcFMfmvU0fszxnbiuKAot+ME8cBpHUgwrudL9mEsxfNBW0VeKocaHmjOBXQuLo2G3YvhDYyEad7yVYvj1QsCePkOV4+2YasHbcnI5xXAyxzvw8QRQOIkzOb48M//1KxSd+I0Uw98Tggedf4s2HmiuKUxln0oxHJ4QClfjkhyf0jjLAF/m5Bbc9T+ArXYh5Phb+SAHOJKTM9hTVvXmSYllVSfNTZzOqWNt3xjguOaCwI04MAk0+/UlXJ9TL+OndnyQYljWGP2sZuP3llU9X1b1pRtUGhcWR+/jPmsGWDmvV+TJezHf+f8Ejmps90sGXIW7cYemCXX1Gw6nGA70wUM8hNf8ty2eQmu9GWy11tX6OoNn8Wq/0Q9wC57IlW2kFzV9+nFrdoMV3Fv0n6a8wBZcg924GZfloZHGUsfws6ZxPYbnrDnjc8xdENxZYEpz99sDWsVS97XIc/bjBU3r3JdiqDYET6r8Au3G1ymG3+EfQy3uekGcgAMAAAAASUVORK5CYII=') 646px 16px no-repeat;
+  float: left;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  }
+  .qsearch input{
+  width: 600px;
+  height: 22px;
+  margin: 15px 0 0 34px;
+  background: none;
+  border: none;
+  outline: none;
+  color: #F8F6F7;
+  font-size: 17px;
+  line-height: 19px;
+  }
+  .q-list{
+  width: 700px;
+  height: 422px;
+  margin: 26px 0 0 0;
+  border-bottom: solid 2px #D3D1D2;
+  background: #F8F6F7;
+  overflow-y: scroll;
+  float: left;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  }
+  .q-list::-webkit-scrollbar {width: 5px;}
+  .q-list::-webkit-scrollbar-thumb {height: 90px; border-radius: 50px; background: #BABEC0;}
+  .q-list::-webkit-scrollbar-thumb:hover {background: #4D606B;}
+  .q-list::-webkit-scrollbar-track {background: #F8F6F7;}
+  .list{
+  width: 100%;
+  height: 70px;
+  margin:0px;
+  padding: 25px 0 0 34px;
+  color: #4D606B;
+  font-size: 17px;
+  line-height: 19px;
+  border-bottom: solid 1px #E4E6E8;
+  cursor: default;
+  float: left;
+  transition:background 0.2s ease;
+  }
+  .list:hover{
+  background: #F1F0F2;
+  }
+  </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+$(function(){
+
+  //Start typing in "input[name='qsearch']" we search in "list"
+  $(".list").qsearch();
+
+  //helpers for demo
+  $qs=$("[name='qsearch']"),$qs.focus(function(){$(this).val()==$(this).attr("title")&&$(this).val('').focus()}),$qs.blur(function(){''==$(this).val()&&$(this).val($(this).attr("title"))});
+  
+});
+
+</script>
+
+<div class="qbox">
+<div class="qsearch"><input class="font" type="text" name="qsearch" title="Quick search" value="Quick search" size="30"></div>
+<div class="q-list">
+ <ul class="list font">Afghanistan</ul>
+ <ul class="list font">Albania</ul>
+ <ul class="list font">Algeria</ul>
+ <ul class="list font">Andorra</ul>
+ <ul class="list font">Angola</ul>
+ <ul class="list font">Anguilla</ul>
+ <ul class="list font">Antarctica</ul>
+ <ul class="list font">Aruba</ul>
+ <ul class="list font">Bahamas</ul>
+ <ul class="list font">Bahrain</ul>
+ <ul class="list font">Bangladesh</ul>
+ <ul class="list font">Barbados</ul>
+ <ul class="list font">Belarus</ul>
+ <ul class="list font">Belgium</ul>
+ <ul class="list font">Benin</ul>
+ <ul class="list font">Cambodia</ul>
+ <ul class="list font">Cameroon</ul>
+ <ul class="list font">Chad</ul>
+ <ul class="list font">China</ul>
+ <ul class="list font">Colombia</ul>
+ <ul class="list font">Comoros</ul>
+ <ul class="list font">Congo</ul>
+ <ul class="list font">Croatia</ul>
+ <ul class="list font">Congo</ul>
+ <ul class="list font">Czech Republic</ul>
+ <ul class="list font">Denmark</ul>
+ <ul class="list font">Dominican Republic</ul>
+ <ul class="list font">Egypt</ul>
+ <ul class="list font">El Salvador</ul>
+ <ul class="list font">Ethiopia</ul>
+ <ul class="list font">Gabon</ul>
+ <ul class="list font">Georgia</ul>
+ <ul class="list font">Grenada</ul>
+ <ul class="list font">Guinea</ul>
+ <ul class="list font">Honduras</ul>
+ <ul class="list font">Hungary</ul>
+ <ul class="list font">Iceland</ul>
+ <ul class="list font">Indonesia</ul>
+ <ul class="list font">Iran</ul>
+ <ul class="list font">Iraq</ul>
+ <ul class="list font">Ireland</ul>
+ <ul class="list font">Israel</ul>
+ <ul class="list font">Italy</ul>
+ <ul class="list font">Japan</ul>
+ <ul class="list font">Jersey</ul>
+ <ul class="list font">Kazakhstan</ul>
+ <ul class="list font">Kiribati</ul>
+ <ul class="list font">Lesotho</ul>
+ <ul class="list font">Liberia</ul>
+ <ul class="list font">Macao</ul>
+ <ul class="list font">Madagascar</ul>
+ <ul class="list font">Mali</ul>
+ <ul class="list font">Martinique</ul>
+ <ul class="list font">Moldova</ul>
+ <ul class="list font">Netherlands</ul>
+ <ul class="list font">Nicaragua</ul>
+ <ul class="list font">Norfolk Island</ul>
+ <ul class="list font">Oman</ul>
+ <ul class="list font">Pakistan</ul>
+ <ul class="list font">Paraguay</ul>
+ <ul class="list font">Qatar</ul>
+ <ul class="list font">Reunion</ul>
+ <ul class="list font">Russian Federation</ul>
+ <ul class="list font">Romania</ul>
+ <ul class="list font">Saint Helena</ul>
+ <ul class="list font">Serbia</ul>
+ <ul class="list font">Suriname</ul>
+ <ul class="list font">Tajikistan</ul>
+ <ul class="list font">Thailand</ul>
+ <ul class="list font">Togo</ul>
+ <ul class="list font">Tunisia</ul>
+ <ul class="list font">Uganda</ul>
+ <ul class="list font">United Kingdom</ul>
+ <ul class="list font">United States</ul>
+ <ul class="list font">Uzbekistan</ul>
+ <ul class="list font">Vanuatu</ul>
+ <ul class="list font">Venezuela</ul>
+ <ul class="list font">Viet Nam</ul>
+ <ul class="list font">Western Sahara</ul>
+ <ul class="list font">Yemen</ul>
+ <ul class="list font">Zambia</ul>
+ <ul class="list font">Zimbabwe</ul>
+</div>
+</div>
+
+<div class="bar"><h1 class="font">Demo:&nbsp;&nbsp;  « QSearch »</h1><a class="font" href="http://github.com/shelgunov">on GitHub</a></div>
+
+</body>
+</html>
